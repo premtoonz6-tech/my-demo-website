@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery with Header and Footer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #FFEB3B; /* bright yellow */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header styling */
+    header {
+      background-color:#FFEB3B;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    /* Main content wrapper */
+    main {
+      flex-grow: 1;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Container for grid */
+    .gallery {
+      width: 100%;
+      max-width: 1200px;
+      display: grid;
+      gap: 20px;
+
+      /* Desktop: 4 columns */
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 992px) {
+      /* Tablet: 2 columns */
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      /* Mobile: 1 column */
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Each card container */
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      /* Inner shadow for stylish inset border */
+      box-shadow:
+        inset 0 0 8px 3px rgba(255, 255, 255, 0.8),
+        0 4px 10px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      user-select: none;
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow:
+        inset 0 0 12px 5px rgba(255, 255, 255, 1),
+        0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    /* Image wrapper */
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 66.66%; /* 3:2 ratio */
+      overflow: hidden;
+      border-radius: 20px 20px 0 0;
+      border: 6px solid #fff;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+      background: #fff;
+    }
+
+    .image-wrapper img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 14px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+  
+
+    /* Button styling */
+    .btn {
+      padding: 14px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      background-color: black;
+      color: white;
+      cursor: pointer;
+      border-radius: 0 0 20px 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      width: 100%;
+      user-select: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+
+    /* Footer styling */
+    footer {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 1rem;
+      user-select: none;
+      flex-shrink: 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.5);
+    }
+   .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .footer-contact,
+    .footer-address,
+    .footer-social {
+      flex: 1 1 250px;
+      margin: 15px;
+    }
+
+    .footer h3 {
+      margin-bottom: 15px;
+      color: #f4b400;
+    }
+
+    .footer a {
+      color: #ffffff;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+
+    .footer a:hover {
+      color: #00ffea;
+    }
+
+    .footer i {
+      margin-right: 10px;
+    }
+
+    .footer .social-icon {
+      display: inline-block;
+      padding: 8px 12px;
+      margin-right: 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+.footer .HomePage {
+      background-color: #ffe600;
+      color: #000;
+    }
+    .footer .Call {
+      background-color: #ffe600;
+      color: #000;
+    }
+
+    .footer .Whatsapp {
+      background-color: #ffe600;
+      color: #000;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid #333;
+      padding-top: 15px;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #ffffff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .footer-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-contact,
+      .footer-address,
+      .footer-social {
+        text-align: center;
+      }
+
+      .footer .social-icon {
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <center>
+    <h1 style="color:black;">SUPER GOOD CONSTRUCTIONS</h1>
+    <h2 style="color:red;">CIVIL ENGINEER AND CONTRACTOR</h2>
+     <h3 style="color:rgb(0, 60, 255);">OUR COMPLETED PROJECTS</h3>
+  </center>
+
+  <main>
+    <div class="gallery">
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="1.jpg" alt="Nature Image 1" />
+        </div>
+        <button class="btn">NEELANKARAI - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="2.jpg" alt="Nature Image 2" />
+        </div>
+        <button class="btn">PERUNGUDI - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="3.jpg" alt="Nature Image 3" />
+        </div>
+        <button class="btn">PERUNGUDI - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="4.jpg" alt="Nature Image 4" />
+        </div>
+        <button class="btn">AVADI - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="5.jpg" alt="Nature Image 5" />
+        </div>
+        <button class="btn">ANNA NAGAR - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="6.jpg" alt="Nature Image 6" />
+        </div>
+        <button class="btn">VADAPALANI - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="7.jpg" alt="Nature Image 7" />
+        </div>
+        <button class="btn">PORUR - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="8.jpg" alt="Nature Image 8" />
+        </div>
+        <button class="btn">ADYAR - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Nature Image 9" />
+        </div>
+        <button class="btn">Explore</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="4.jpg" alt="Nature Image 10" />
+        </div>
+        <button class="btn">TAMBARAM - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Nature Image 11" />
+        </div>
+        <button class="btn">GUINDY - CHENNAI</button>
+      </div>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Nature Image 12" />
+        </div>
+        <button class="btn">RAMAPURAM - CHENNAI</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <footer class="footer">
+    <div class="footer-container">
+      
+      <!-- Contact Info -->
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><i class="fa-solid fa-phone"></i><a href="tel:+918825455879">+91 8825455879</a> <a href="tel:+918939123097">+91 8939123097</a></p>
+        <p><i class="fa-solid fa-envelope"></i><a href="mailto:supergoodconstructions@gmail.com">supergoodconstructions@gmail.com</a></p>
+        <p><i class="fa-solid fa-globe"></i><a href="https://www.supergoodconstructions.com" target="_blank">www.supergoodconstructions.com</a></p>
+      </div>
+
+      <!-- Address -->
+      <div class="footer-address">
+        <h3>Our Office</h3>
+        <p><i class="fa-solid fa-location-dot"></i> 123 Business Street,<br>
+          City Name, ZIP 456789,<br>
+          Country
+        </p>
+      </div>
+
+      <!-- Social Media -->
+      <div class="footer-social">
+        <h3>Follow Us</h3>
+        <a href="file main.html" target="_blank" class="social-icon HomePage">
+          <i class="fa-solid fa-house"></i> Home Page
+        </a>
+        <a href="tel:+918939123097" target="_blank" class="social-icon Call">
+          <i class="fa-solid fa-phone"></i> Call
+        </a>
+        <a href="https://wa.me/+918939123097" target="_blank" class="social-icon Whatsapp">
+          <i class="fa-brands fa-whatsapp"></i> Whatsapp
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      © 2025 supergoodconstructions. All rights reserved.
+    </div>
+    
+  </footer>
+
+</body>
+</html>
